@@ -59,15 +59,15 @@ export async function getHighRatedStories(req: Request, res: Response) {
 
     const stories = await StoryModel.aggregate([
       {
-        $unwind: "$ratings", // Unwind the ratings array directly within StoryModel
+        $unwind: "$ratings",
       },
       {
         $group: {
-          _id: "$_id", // Group by story ID
-          averageRating: { $avg: "$ratings.rating" }, // Calculate average rating
+          _id: "$_id",
+          averageRating: { $avg: "$ratings.rating" },
         },
       },
-      { $sort: { averageRating: -1 } }, // Sort by average rating descending
+      { $sort: { averageRating: -1 } }, 
       { $skip: skip },
       { $limit: limit },
     ]);
